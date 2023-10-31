@@ -1,4 +1,7 @@
-// TODO: Add the required header
+// Katie Nguyen
+// katiequynhtram@csu.fullerton.edu
+// @ktnwin
+// Partners: @Dav-929
 
 #include <iostream>
 #include <string>
@@ -7,10 +10,14 @@
 int main(int argc, char* argv[]) {
   std::vector<std::string> arguments{argv, argv + argc};
 
-  // TODO: Validate that there is at least one command line argument.
+  // Validate that there is at least one command line argument.
   // If not, print an error message and return a non-zero value.
-
-  // TODO: Write a for-each loop to sum (add up) all of the command line
+  if (argc <= 1) {
+    std::cerr << "Error: Provide at least one command line argument."
+              << "\n";
+    return 1;
+  }
+  // Write a for-each loop to sum (add up) all of the command line
   // arguments.
   // Use a double or float type so that your program preserves fractional
   // values.
@@ -18,14 +25,36 @@ int main(int argc, char* argv[]) {
   // of the arguments vector.
   // Each argument is a std::string. You will need to convert each string into
   // a number with the std::stod or std::stof function.
+  double sum = 0.0;
+  int count = 0;
 
-  // TODO: After the loop has finished summing the arguments, calculate the
+  for (int i = 1; i < argc; ++i) {
+    try {
+      double num = std::stod(arguments[i]);
+      sum += num;
+      count++;
+    } catch (const std::invalid_argument& e) {
+      std::cerr << "Error: Argument '" << arguments[i]
+                << "' is not a valid number."
+                << "\n";
+      return 1;
+    }
+  }
+  // After the loop has finished summing the arguments, calculate the
   // average of the values. Recall that the average is the total value divided
   // by the number of values.
+  if (count == 0) {
+    std::cerr << "Error: No valid numbers found in the arguments."
+              << "\n";
+    return 1;
+  }
 
-  // TODO: Use cout to print out a message of the form
+  // Use cout to print out a message of the form
   // average = *AVERAGE*
   // on its own line.
+  double average = sum / count;
+
+  std::cout << "average = " << average << "\n";
 
   return 0;
 }
